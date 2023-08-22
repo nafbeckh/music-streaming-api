@@ -1,0 +1,1176 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Music Streaming API Specification",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Nafi Beckhamsyah Siahaan",
+      "email": "nafbeckhshn@gmail.com",
+      "url": "https://github.com/nafbeckh"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["search"],
+        "summary": "Search user by query",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/q"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                },
+                "examples": {
+                  "default": {
+                    "value": [
+                      {
+                        "$ref": "#/components/examples/User/value"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Returns a user",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/user_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/User"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/UserNotFound"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/tracks": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Returns a list of user's tracks",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/user_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tracks"
+                },
+                "examples": {
+                  "default": {
+                    "value": [
+                      {
+                        "$ref": "#/components/examples/Track/value"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/playlists": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Returns a list of user's playlists",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/user_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Playlists"
+                },
+                "examples": {
+                  "default": {
+                    "value": [
+                      {
+                        "$ref": "#/components/examples/Playlist/value"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tracks": {
+      "post": {
+        "tags": ["tracks"],
+        "summary": "Uploads a new track",
+        "requestBody": {
+          "description": "Track payload",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/TrackRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Track"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Track"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["search"],
+        "summary": "Search user by query",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/q"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tracks"
+                },
+                "examples": {
+                  "default": {
+                    "value": [
+                      {
+                        "$ref": "#/components/examples/Track/value"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tracks/{track_id}": {
+      "get": {
+        "tags": ["tracks"],
+        "summary": "Returns a track",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/track_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Track"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Track"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/TrackNotFound"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["tracks"],
+        "summary": "Updates a track",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/track_id"
+          }
+        ],
+        "requestBody": {
+          "description": "Track payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrackMetaData"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/TrackRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Track"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Track"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/TrackNotFound"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["tracks"],
+        "summary": "Deletes a track",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/track_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/TrackNotFound"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playlists": {
+      "post": {
+        "tags": ["playlists"],
+        "summary": "Creates a new playlist",
+        "requestBody": {
+          "description": "Playlist payload",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaylistRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Playlist"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Playlist"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["search"],
+        "summary": "Search user by query",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/q"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Playlists"
+                },
+                "examples": {
+                  "default": {
+                    "value": [
+                      {
+                        "$ref": "#/components/examples/Playlist/value"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playlists/{playlist_id}": {
+      "get": {
+        "tags": ["playlists"],
+        "summary": "Returns a playlist",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/playlisst_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Playlist"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Playlist"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/PlaylistNotFound"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["playlists"],
+        "summary": "Updates a playlist",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/playlisst_id"
+          }
+        ],
+        "requestBody": {
+          "description": "Playlist payload",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaylistRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Playlist"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Playlist"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/Unautorized"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/PlaylistNotFound"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["playlists"],
+        "summary": "Deletes a playlists",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/playlisst_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/PlaylistNotFound"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "q": {
+        "in": "query",
+        "name": "q",
+        "required": true,
+        "description": "Search",
+        "example": "Firestone",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "user_id": {
+        "in": "path",
+        "name": "user_id",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "e3e85503-08e9-4969-9303-ba83ccf2ff0a"
+        }
+      },
+      "track_id": {
+        "in": "path",
+        "name": "track_id",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "track-rhv5Al3wSwmn"
+        }
+      },
+      "playlisst_id": {
+        "in": "path",
+        "name": "playlisst_id",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "playlist-dL2wnHD7ko"
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "user identifier"
+          },
+          "username": {
+            "type": "string",
+            "description": "Unique username"
+          },
+          "name": {
+            "type": "string",
+            "description": "User full name"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country"
+          },
+          "track_count": {
+            "type": "integer",
+            "description": "Number of public tracks"
+          },
+          "playlist_count": {
+            "type": "integer",
+            "description": "Number of public playlists"
+          },
+          "avatar_url": {
+            "type": "string",
+            "description": "URL to image file"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Created timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Updated timestamp"
+          }
+        }
+      },
+      "Users": {
+        "description": "Users list",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
+      },
+      "Me": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier"
+          },
+          "username": {
+            "type": "string",
+            "description": "Unique username"
+          },
+          "name": {
+            "type": "string",
+            "description": "User full name"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country"
+          },
+          "track_count": {
+            "type": "integer",
+            "description": "Number of created tracks"
+          },
+          "playlist_count": {
+            "type": "integer",
+            "description": "Number of created playlists"
+          },
+          "avatar_url": {
+            "type": "string",
+            "description": "URL to image file"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Created timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Updated timestamp"
+          }
+        }
+      },
+      "TrackMetaData": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "genre": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "release_date": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "TrackRequest": {
+        "type": "object",
+        "required": ["title", "audio_data", "artwork_data", "release_date"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "genre": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "audio_data": {
+            "title": "Only for uploading",
+            "type": "string",
+            "format": "binary"
+          },
+          "artwork_data": {
+            "title": "Only for uploading",
+            "type": "string",
+            "format": "binary"
+          },
+          "release_date": {
+            "title": "Write only",
+            "type": "string",
+            "description": "formatted yyyy-mm-dd, representing release date"
+          }
+        } 
+      },
+      "Track": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Track identifier"
+          },
+          "title": {
+            "type": "string",
+            "description": "Track title"
+          },
+          "genre": {
+            "type": "string",
+            "description": "Genre"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "Track duration"
+          },
+          "release_day": {
+            "type": "integer",
+            "description": "Day of release"
+          },
+          "release_month": {
+            "type": "integer",
+            "description": "Month of release"
+          },
+          "release_year": {
+            "type": "integer",
+            "description": "Year of release"
+          },
+          "description": {
+            "type": "string",
+            "description": "Track description"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User who upload a track"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL to audio file"
+          },
+          "artwork_url": {
+            "type": "string",
+            "description": "URL to image file"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Created timestamp"
+          }
+        }
+      },
+      "Tracks": {
+        "description": "Tracks list",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Track"
+        }
+      },
+      "PlaylistRequest": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "sharing": {
+            "type": "string",
+            "description": "default: private",
+            "enum": ["private", "public"]
+          },
+          "artwork_data": {
+            "title": "Only image file",
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "Playlist": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier"
+          },
+          "title": {
+            "type": "string",
+            "description": "Playlist title"
+          },
+          "track_count": {
+            "type": "integer",
+            "description": "Count of tracks"
+          },
+          "tracks": {
+            "description": "List of tracks",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Track"
+            }
+          },
+          "sharing": {
+            "type": "string",
+            "description": "Type of sharing (private/public)"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User who created this playlist"
+          },
+          "artwork_url": {
+            "type": "string",
+            "description": "URL to image file"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Created timestamp"
+          }
+        }
+      },
+      "Playlists": {
+        "description": "Playlists list",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Playlist"
+        }
+      }
+    },
+    "examples": {
+      "BadRequest": {
+        "value": {
+          "code": 400,
+          "message": "Title is required"
+        }
+      },
+      "Unautorized": {
+        "value": {
+          "code": 401,
+          "message": "Missing authentication"
+        }
+      },
+      "User": {
+        "value": {
+          "id": "e3e85503-08e9-4969-9303-ba83ccf2ff0a",
+          "username": "someUsername",
+          "name": "Some Name",
+          "country": "Indonesia",
+          "track_count": 0,
+          "playlist_count": 0,
+          "avatar_url": "http://localhost:5000/tracks/file/avatars/11320230820.jpg",
+          "created_at": "2023-08-20 11:48:00 +0000"
+        }
+      },
+      "UserNotFound": {
+        "value": {
+          "value": {
+            "code": 404,
+            "message": "User not found"
+          }
+        }
+      },
+      "Track": {
+        "value": {
+          "id": "track-rhv5Al3wSwmn",
+          "title": "Some title",
+          "genre": "Folk",
+          "duration": 210,
+          "release_day": 20,
+          "release_month": 8,
+          "release_year": 2023,
+          "description": "description",
+          "user": "Some User",
+          "url": "http://localhost:5000/tracks/file/audio/track-rhv5Al3wSwmn.mp3",
+          "artwork_url": "http://localhost:5000/tracks/file/artworks/21320230820.jpg",
+          "created_at": "2023-08-20 11:48:00 +0000"
+        }
+      },
+      "TrackNotFound": {
+        "value": {
+          "value": {
+            "code": 404,
+            "message": "Track not found"
+          }
+        }
+      },
+      "Playlist": {
+        "value": {
+          "id": "playlist-dL2wnHD7ko",
+          "title": "Some title",
+          "track_count": 1,
+          "tracks": {
+            "$ref": "#/components/examples/Track/value"
+          },
+          "sharing": "private",
+          "user_id": "asdaso21js",
+          "artwork_url": "http://localhost:5000/playlists/file/artworks/11320230820.jpg",
+          "created_at": "2023-08-20 11:48:00 +0000"
+        }
+      },
+      "PlaylistNotFound": {
+        "value": {
+          "value": {
+            "code": 404,
+            "message": "Playlist not found"
+          }
+        }
+      }
+    }
+  }
+}
