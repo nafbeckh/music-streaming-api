@@ -9,3 +9,75 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Authentication {
+  id Int @id @default(autoincrement())
+  token String @db.Text
+
+  @@map("authentications")
+}
+
+model User {
+  id String @id @db.VarChar(20)
+  username String @unique @db.VarChar(30)
+  password String @db.VarChar(200)
+  name String @db.VarChar(60)
+  country String? @db.VarChar(35)
+  avatar_url String? @db.VarChar(200)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  tracks Track[]
+  playlists Playlist[]
+
+  @@map("users")
+}
+
+model Track {
+  id String @id @db.VarChar(20)
+  title String @db.VarChar(100)
+  genre String @db.VarChar(30)
+  description String @db.Text()
+  url String @db.VarChar(200)
+  artwork_url String @db.VarChar(200)
+  user_id String @db.VarChar(20)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+  playlist_traacks PlaylistTrack[]
+
+  @@map("tracks")
+}
+
+model Playlist {
+  id String @id @db.VarChar(25)
+  title String @db.VarChar(100)
+  sharing Sharing @default(private)
+  artwork_url String @db.VarChar(200)
+  user_id String @db.VarChar(20)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+  playist_tracks PlaylistTrack[]
+
+  @@map("playlists")
+}
+
+model PlaylistTrack {
+  id String @id @db.VarChar(35)
+  playlist_id String @db.VarChar(25)
+  track_id String @db.VarChar(20)
+
+  playlist Playlist @relation(fields: [playlist_id], references: [id])
+  track Track @relation(fields: [track_id], references: [id])
+  @@unique([playlist_id, track_id], name: "playlist_track")
+
+  @@map("playlist_tracks")
+}
+
+enum Sharing {
+  private
+  public
+}
