@@ -1,16 +1,12 @@
 /* eslint-disable no-undef */
 import { web } from '../src/application/web.js'
 import { logger } from '../src/application/logging.js'
-import { prismaClient } from '../src/application/database.js'
+import { removeUser } from './test-util.js'
 import supertest from 'supertest'
 
 describe('POST /users', function () {
   afterEach(async () => {
-    await prismaClient.user.deleteMany({
-      where: {
-        username: 'test'
-      }
-    })
+    await removeUser()
   })
 
   it('should can register new user', async () => {
