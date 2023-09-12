@@ -7,12 +7,6 @@ const registerUserSchema = Joi.object({
   country: Joi.string()
 })
 
-const loginUserSchema = Joi.object({
-  username: Joi.string().max(30).required(),
-  password: Joi.string().min(8).required()
-})
-
 export {
-  registerUserSchema,
-  loginUserSchema
+  registerUserSchema
 }
